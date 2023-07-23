@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "chmod a+x buildtestimage.sh && ./buildtestimage.sh c3pobot/logserver",
+    "prod": "chmod a+x buildprodimage.sh && ./buildprodimage.sh c3pobot/logserver"
   },
   "author": "scuba75",
   "license": "ISC",
@@ -12,7 +14,7 @@
     "body-parser": "^1.20.2",
     "compression": "^1.7.4",
     "express": "^4.18.2",
-    "winston-daily-rotate-file": "^4.7.1",
-    "winstond": "^0.0.2"
+    "winston": "^3.10.0",
+    "winston-daily-rotate-file": "^4.7.1"
   }
 }
