@@ -1,5 +1,5 @@
 'use strict'
-const local = require('./local')
+const log = require('./logger')
 const remote = require('./remote')
 const PORT = process.env.PORT || 3000
 const express = require('express');
@@ -21,17 +21,17 @@ app.post('/saveLogs', (req, res)=>{
   handleSaveLogRequest(req, res)
 })
 const server = app.listen(PORT, ()=>{
-  local.info('log server is listening on '+server.address().port)
-  remote.info('log server is listening on '+server.address().port)
+  log.info('log server is listening on '+server.address().port)
 })
 function log2console(data = {}){
+  if(!log[data.level]) return
   let msg = ''
   if(data.set && data.pod){
     msg = `${data.set}-${data.pod} : ${data.message}`
   }else{
     msg = data.message
   }
-  local.log({level: data.level, timestamp: data.timestamp, message: msg})
+  log[data.level](msg, data.timestamp)
 }
 function handleSaveLogRequest(req, res){
   let level = req.body.level, data = req.body
