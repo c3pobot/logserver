@@ -20,6 +20,9 @@ app.get('/healthz', (req, res)=>{
 app.post('/saveLogs', (req, res)=>{
   handleSaveLogRequest(req, res)
 })
+app.use('/', (req, res)=>{
+  console.log(req.body)
+})
 const server = app.listen(PORT, ()=>{
   log.info('log server is listening on '+server.address().port)
 })
