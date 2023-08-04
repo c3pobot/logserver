@@ -1,16 +1,22 @@
-'use strict'
-const path = require('path')
-const winston = require('winston')
-const DailyRotateFile = require('winston-daily-rotate-file');
-const DATA_DIR = process.env.DATA_DIR || path.join(baseDir, 'data')
-
-const logger = winston.createLogger({
-  transports: [new DailyRotateFile({
-    filename: path.join(DATA_DIR, 'application-%DATE%.log'),
-    datePattern: 'YYYY-MM-DD-HH',
-    maxSize: '20m',
-    maxFiles: '14d'
-  })]
-})
-
-module.exports = logger
+let array = [], maxLength = 200
+const checkLength = ()=>{
+  try{
+    if(array.length > maxLength){
+      console.log(array.length)
+      while(array.length > maxLength) array.shift()
+      console.log(array.length)
+    }
+    setTimeout(checkLength, 5000)
+  }catch(e){
+    setTimeout(checkLength, 5000)
+    console.log(e)
+  }
+}
+checkLength()
+module.exports = async(data = {})=>{
+  try{
+    array.push(data)
+  }catch(e){
+    console.error(e);
+  }
+}

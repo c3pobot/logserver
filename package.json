@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "update": "chmod a+x updategitdependency.sh && ./updategitdependency.sh",
     "build": "chmod a+x buildtestimage.sh && ./buildtestimage.sh c3pobot/logserver",
     "prod": "chmod a+x buildprodimage.sh && ./buildprodimage.sh c3pobot/logserver"
   },
@@ -15,6 +16,8 @@
     "chalk": "^4.1.2",
     "compression": "^1.7.4",
     "express": "^4.18.2",
+    "mongoapiclient": "github:c3pobot/mongoapiclient",
+    "node-cache": "^5.1.2",
     "winston": "^3.10.0",
     "winston-daily-rotate-file": "^4.7.1"
   }
