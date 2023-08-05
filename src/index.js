@@ -7,6 +7,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const app = express()
+const Socket = require('./socketServer')
 app.use(bodyParser.json({
   limit: '100MB',
   verify: (req, res, buf)=>{
@@ -22,8 +23,12 @@ app.post('/fluentBit', (req, res)=>{
   handleFluentBit(req?.body)
   res.sendStatus(200)
 })
+app.get('/*', (req, res)=>{
+  res.sendFile(path.join(__dirname, 'webapp', 'index.html'));
+})
 const server = app.listen(PORT, ()=>{
   log.info('log server is listening on '+server.address().port)
+  Socket(server)
 })
 function correctMsg(data = {}){
   try{
@@ -48,7 +53,8 @@ function handleFluentBit(data = []){
       let logLevel = 'info'
       if(data[i].logLevel) logLevel = data[i].logLevel
       correctMsg(data[i])
-      save2mongo(data[i])
+      //save2mongo(data[i])
+      Socket.sendLog(data[i])
       log[logLevel](`${data[i].pod_name} : ${data[i].container_name} :\n  ${data[i].log}`, data[i].date)
     }
   }catch(e){
